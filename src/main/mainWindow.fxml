@@ -34,7 +34,7 @@
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <Slider fx:id="slider" layoutX="63.0" layoutY="322.0" prefHeight="15.0" prefWidth="508.0" />
+            <Slider fx:id="slider" layoutX="63.0" layoutY="322.0" max="400.0" min="5.0" prefHeight="15.0" prefWidth="508.0" showTickLabels="true" showTickMarks="true" />
             <Label layoutX="60.0" layoutY="282.0" prefHeight="26.0" prefWidth="230.0" text="Time screen lock:">
                <font>
                   <Font name="System Bold" size="21.0" />
@@ -45,13 +45,13 @@
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <Button fx:id="apply" layoutX="474.0" layoutY="372.0" mnemonicParsing="false" onAction="#handle" prefHeight="25.0" prefWidth="97.0" text="Apply" />
+            <Button fx:id="apply" disable="true" layoutX="474.0" layoutY="372.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Apply" />
             <Label id="time" fx:id="time" layoutX="154.0" layoutY="142.0" prefHeight="26.0" prefWidth="378.0">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <Label id="time_lock" fx:id="time_lock" layoutX="281.0" layoutY="283.0" prefHeight="26.0" prefWidth="281.0">
+            <Label id="time_lock" fx:id="timeLock" layoutX="281.0" layoutY="283.0" prefHeight="26.0" prefWidth="281.0">
                <font>
                   <Font name="System Bold" size="21.0" />
                </font>
