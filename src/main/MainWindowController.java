@@ -3,7 +3,6 @@ package main;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,13 +27,15 @@ public class MainWindowController {
     @FXML
     private Slider slider;
 
+    private double currentLockTime;
+
     private RefreshThread refreshThread = new RefreshThread();
 
     public MainWindowController() {
         refreshThread.start();
         refreshThread.addListeners(() -> updateLabels());
         Platform.runLater(() -> {
-            double currentLockTime = getCurrentLockTime();
+            currentLockTime = getCurrentLockTime();
             slider.setValue(currentLockTime);
             timeLock.setText(Integer.toString((int)currentLockTime) + " seconds");
             slider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -49,10 +50,16 @@ public class MainWindowController {
 
     private void updateLabels() {
         Platform.runLater(() -> {
-                if(battery != null) battery.setText(refreshThread.getList().get(0) + ", "
+               battery.setText(refreshThread.getList().get(0) + ", "
                         + refreshThread.getList().get(1));
-                if(time != null) time.setText(refreshThread.getList().get(2));
-                if(adapter != null) adapter.setText(refreshThread.getAdapterInfo());
+               time.setText(refreshThread.getList().get(2));
+               String adapterInfo = refreshThread.getAdapterInfo();
+               if(adapterInfo.equals("online")) {
+                   slider.setDisable(true);
+               } else {
+                   slider.setDisable(false);
+               }
+               adapter.setText(adapterInfo);
         });
     }
 
@@ -60,11 +67,24 @@ public class MainWindowController {
         try {
             Process process = Runtime.getRuntime().exec("gsettings get org.gnome.desktop.session idle-delay");
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            return Integer.parseInt(reader.readLine().split(" ")[1]);
+            int result = Integer.parseInt(reader.readLine().split(" ")[1]);
+            process.destroy();
+            reader.close();
+            return result;
         } catch (IOException e) {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    public void clickApply() {
+        try {
+            Runtime.getRuntime().exec("gsettings set org.gnome.desktop.session idle-delay " +
+                            Integer.toString((int)slider.getValue()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        apply.setDisable(true);
     }
 
     public void shutdown() {

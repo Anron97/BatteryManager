@@ -45,7 +45,7 @@
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <Button fx:id="apply" disable="true" layoutX="474.0" layoutY="372.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Apply" />
+            <Button fx:id="apply" disable="true" layoutX="474.0" layoutY="372.0" mnemonicParsing="false" onAction="#clickApply" prefHeight="25.0" prefWidth="97.0" text="Apply" />
             <Label id="time" fx:id="time" layoutX="154.0" layoutY="142.0" prefHeight="26.0" prefWidth="378.0">
                <font>
                   <Font name="System Bold" size="21.0" />
